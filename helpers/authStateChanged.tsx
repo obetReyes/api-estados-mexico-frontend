@@ -5,22 +5,15 @@ export default function AuthStateChanged({ children }:any) {
 	const { setUser, waitForUser, setToken } = useAut();
 	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
+	useEffect(() => {   
 		waitForUser((userCred:any) => {
-			
-            if(userCred){
-            setUser({
-                name:userCred.displayName
-            });
-            userCred.getIdToken().then((token:any) => {
+			setUser({name:userCred.displayName});
+			userCred.getIdToken().then((token:any) => {
                 setToken(token)
             })
-            }else{
-                setUser(null)
-                setToken(null)
-            }
+            setLoading(false);
+
 		});
-        setLoading(false);
 		//eslint-disable-next-line
 	}, []);
 
